@@ -1,21 +1,42 @@
-const boton = document.querySelector('#boton');
+const boton_dark = document.querySelector('#bt_dark');
 const configUser = window.matchMedia('(prefers-color-scheme: dark)');
 const localConfig = localStorage.getItem('tema');
-if (localConfig === 'dark') {
-    document.body.classList.toggle('dark-theme')
-} else if (localConfig === 'light') {
-    document.body.classList.toggle('light-theme')
-}
-boton.addEventListener('click', () => {
-    let colorTema;
-    if (configUser.matches) {
-        // Entramos con modo oscuro
-        document.body.classList.toggle('light-theme')
-        colorTema = document.body.classList.contains('light-theme') ? 'light' : 'dark'
 
-    } else {
-        document.body.classList.toggle('dark-theme')
-        colorTema = document.body.classList.contains('dark-theme') ? 'dark' : 'light'
-    }
-    localStorage.setItem('tema', colorTema)
+if(localConfig == null){
+	if(configUser.matches == true){
+		document.body.classList.add('dark-mode');
+		document.getElementById("bt_dark").classList.add("light_im");
+	}else{
+		document.getElementById("bt_dark").classList.add("dark_im");
+		document.body.classList.add('light-theme');
+	}
+}else{
+	if (localConfig == 'dark') {
+		document.body.classList.add('dark-mode');
+		document.getElementById("bt_dark").classList.add("light_im");
+	} else if (localConfig == 'light') {
+		document.getElementById("bt_dark").classList.add("dark_im");
+		document.body.classList.add('light-theme');
+	}
+}
+
+boton_dark.addEventListener('click', () => {
+    let colorTema;
+	
+	if(document.body.classList.contains('light-theme')){
+		colorTema = 'dark';
+		document.body.classList.remove('light-theme');
+		document.body.classList.add('dark-mode');
+		document.getElementById("bt_dark").classList.remove("dark_im");
+		document.getElementById("bt_dark").classList.add("light_im");	
+	}else{
+		colorTema = 'light';
+		document.body.classList.remove('dark-mode');
+		document.body.classList.add('light-theme');
+		document.getElementById("bt_dark").classList.remove("light_im");
+		document.getElementById("bt_dark").classList.add("dark_im");	
+	}
+		
+    localStorage.setItem('tema', colorTema);
+	
 })
